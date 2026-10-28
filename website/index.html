@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Xurqxys DBD Tool</title>
+  <meta name="description" content="Free Dead by Daylight build randomizer, challenge modes, perk database, match tracker and streamer overlay for Windows.">
+  <meta property="og:title" content="Xurqxys DBD Tool">
+  <meta property="og:description" content="Free DBD build randomizer with challenge modes, stats and a streamer overlay.">
+  <meta property="og:image" content="img/hero.png">
+  <link rel="icon" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/icon.png">
+  <style>
+    @font-face { font-family: Oxanium; font-weight: 700; src: url(fonts/oxanium-latin-700-normal.woff2) format('woff2'); font-display: swap; }
+    @font-face { font-family: Oxanium; font-weight: 800; src: url(fonts/oxanium-latin-800-normal.woff2) format('woff2'); font-display: swap; }
+    @font-face { font-family: Inter; font-weight: 400; src: url(fonts/inter-latin-400-normal.woff2) format('woff2'); font-display: swap; }
+    @font-face { font-family: Inter; font-weight: 600; src: url(fonts/inter-latin-600-normal.woff2) format('woff2'); font-display: swap; }
+    :root { --bg: #07060a; --glass: rgba(24, 19, 32, 0.6); --line: rgba(255, 255, 255, 0.09); --text: #f1edf7; --text-2: #b8b0c6; --muted: #847c96;
+      --red: #ff3b5c; --violet: #8b5cf6; --cyan: #38bdf8; color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, "Segoe UI", system-ui, sans-serif; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+      background: radial-gradient(40% 35% at 15% 10%, rgba(255, 59, 92, 0.28), transparent 70%), radial-gradient(40% 40% at 90% 30%, rgba(139, 92, 246, 0.22), transparent 70%), radial-gradient(35% 35% at 50% 95%, rgba(56, 189, 248, 0.12), transparent 70%); }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: Oxanium, sans-serif; letter-spacing: 0.01em; margin: 0; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(14px); background: rgba(7, 6, 10, 0.7); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
+    .brand { display: flex; align-items: center; gap: 10px; font: 800 15px Oxanium, sans-serif; letter-spacing: 0.2em; text-decoration: none; }
+    .brand img { width: 30px; height: 30px; }
+    nav .links { margin-left: auto; display: flex; gap: 20px; font-size: 14px; color: var(--text-2); }
+    nav .links a { text-decoration: none; }
+    nav .links a:hover { color: var(--text); }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 14px; font: 700 15px Oxanium, sans-serif; letter-spacing: 0.08em;
+      text-decoration: none; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.05); transition: transform 0.2s, filter 0.2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { border: 0; color: #fff; background: linear-gradient(135deg, var(--red), var(--violet)); box-shadow: 0 0 30px rgba(255, 59, 92, 0.4); }
+    .btn.primary:hover { filter: brightness(1.1); }
+    .hero { padding: 80px 0 40px; text-align: center; }
+    .icon-link { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--line); color: var(--text-2); }
+    .icon-link:hover { color: var(--text); }
+    .btn.coffee { border: 0; color: #1a1206; background: linear-gradient(135deg, #ffdd00, #ffb800); box-shadow: 0 0 20px rgba(255, 210, 0, 0.25); }
+    .support { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    @media (max-width: 860px) { .hide-sm { display: none; } }
+    .pill { display: inline-block; padding: 6px 14px; border-radius: 99px; border: 1px solid rgba(255, 59, 92, 0.4); background: rgba(255, 59, 92, 0.1); color: #ff8fa3; font: 700 12px Oxanium, sans-serif; letter-spacing: 0.2em; text-transform: uppercase; }
+    .hero h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.05; margin: 22px auto 18px; max-width: 900px; }
+    .hero h1 span { background: linear-gradient(135deg, #ff6b84, #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { color: var(--text-2); font-size: 19px; max-width: 680px; margin: 0 auto 32px; }
+    .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .small { font-size: 13px; color: var(--muted); margin-top: 14px; }
+    .shot { margin: 56px auto 0; max-width: 1060px; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), 0 0 80px rgba(255, 59, 92, 0.15); }
+    .shot img { display: block; width: 100%; height: auto; }
+    section { padding: 70px 0; }
+    .eyebrow { font: 700 12px Oxanium, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+    h2 { font-size: clamp(28px, 4vw, 40px); margin-bottom: 14px; }
+    .lead { color: var(--text-2); max-width: 640px; margin: 0 0 36px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { padding: 24px; border-radius: 16px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px); }
+    .card h3 { font-size: 18px; margin: 12px 0 6px; }
+    .card p { color: var(--text-2); font-size: 14.5px; margin: 0; }
+    .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: rgba(255, 59, 92, 0.12); color: #ff8fa3; }
+    .split { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; }
+    .split.rev { grid-template-columns: 1.25fr 1fr; }
+    .split img { width: 100%; border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); }
+    ul.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; color: var(--text-2); }
+    ul.ticks li::before { content: '◆'; color: var(--red); margin-right: 10px; font-size: 11px; }
+    .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .modes span { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font-size: 13px; background: rgba(255, 255, 255, 0.04); }
+    details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+    summary { cursor: pointer; font: 700 17px Oxanium, sans-serif; list-style: none; }
+    summary::after { content: '+'; float: right; color: var(--red); }
+    details[open] summary::after { content: '–'; }
+    details p { color: var(--text-2); margin: 10px 0 0; }
+    .download { text-align: center; padding: 60px 24px; border-radius: 24px; background: linear-gradient(160deg, rgba(255, 59, 92, 0.12), rgba(139, 92, 246, 0.1)); border: 1px solid var(--line); }
+    footer { padding: 40px 0 60px; color: var(--muted); font-size: 13px; text-align: center; border-top: 1px solid var(--line); margin-top: 40px; }
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .split, .split.rev { grid-template-columns: 1fr; }
+      .split.rev img { order: -1; }
+      nav .links { display: none; }
+      .hero { padding-top: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <nav><div class="wrap">
+    <a class="brand" href="#"><img src="img/icon.png" alt="">XURQXYS</a>
+    <div class="links"><a href="#features">Features</a><a href="#streamers">Streamers</a><a href="#faq">FAQ</a></div>
+    <a class="icon-link" href="https://github.com/xurqxy" target="_blank" rel="noopener" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <a class="btn coffee" href="https://buymeacoffee.com/xurqxy" target="_blank" rel="noopener" style="padding:8px 14px;font-size:13px">☕ <span class="hide-sm">Buy me a coffee</span></a>
+    <a class="btn primary" href="#download" style="padding:9px 18px;font-size:13px">Download</a>
+  </div></nav>
+
+  <header class="hero"><div class="wrap">
+    <span class="pill">Free · Windows</span>
+    <h1>Spin the Entity.<br><span>Play something new.</span></h1>
+    <p>A free Dead by Daylight companion: random builds and challenge modes, a full perk database, one-click match tracking with deep stats, and a live overlay for your stream.</p>
+    <div class="cta">
+      <a class="btn primary" href="#download">⬇ Download for Windows</a>
+      <a class="btn" href="#features">See features</a>
+    </div>
+    <div class="small">No account needed · Works offline · Doesn't touch the game</div>
+    <div class="shot"><img src="img/hero.png" alt="The Xurqxys DBD Tool randomizer showing a killer, four perks, add-ons and an offering" width="1366" height="800"></div>
+  </div></header>
+
+  <section id="features"><div class="wrap">
+    <div class="eyebrow">Features</div>
+    <h2>Everything you need between matches</h2>
+    <p class="lead">Built for players who are tired of running the same four perks.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">🎲</div><h3>Build randomizer</h3><p>Character, perks, item, add-ons and offering in one spin. Lock what you like, reroll the rest, filter by theme or by the perks you own.</p></div>
+      <div class="card"><div class="ico">⚔</div><h3>Challenge modes</h3><p>Adept, No Meta, Theme Roulette, Hex Only, No Perks, Mystery and Squad of 4 for you and your friends.</p></div>
+      <div class="card"><div class="ico">📖</div><h3>Perk database</h3><p>Every perk, killer and survivor, searchable and grouped by category, with official icons downloaded from the DBD Wiki.</p></div>
+      <div class="card"><div class="ico">📝</div><h3>One-click match log</h3><p>Pick 0K–4K or how you escaped and you're done. Your loadout carries over, and there's undo if you misclick.</p></div>
+      <div class="card"><div class="ico">📊</div><h3>Deep stats</h3><p>Win rate over time, the perks that actually win you games, your best perk combos, and your best maps and characters.</p></div>
+      <div class="card"><div class="ico">🏆</div><h3>Achievements & win stats</h3><p>24 achievements to chase, plus your real win rate for every perk and killer, right on the rolled build.</p></div>
+      <div class="card"><div class="ico">🔗</div><h3>Share builds</h3><p>Send a short code or a ready-made image to Discord, and load your friends' builds in one click.</p></div>
+      <div class="card"><div class="ico">🌍</div><h3>Your language</h3><p>English, Deutsch, Español, Português and Français, with your saved data staying on your PC.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap split">
+    <div>
+      <div class="eyebrow">Challenge modes</div>
+      <h2>Make every match a challenge</h2>
+      <p class="lead" style="margin-bottom:18px">Pick a mode and spin. Squad mode rolls four builds at once with no character or perk used twice, which is perfect for SWF nights.</p>
+      <div class="modes"><span>Adept</span><span>No Meta</span><span>Theme Roulette</span><span>Hex Only</span><span>Totems &amp; Boons</span><span>No Perks</span><span>Mystery</span><span>Squad of 4</span></div>
+    </div>
+    <img src="img/squad.png" alt="Squad of 4 mode with four survivor builds" loading="lazy">
+  </div></section>
+
+  <section><div class="wrap split rev">
+    <img src="img/stats.png" alt="Perk impact statistics comparing win rate with and without each perk" loading="lazy">
+    <div>
+      <div class="eyebrow">Stats</div>
+      <h2>Find out what actually wins</h2>
+      <ul class="ticks">
+        <li>Win rate with vs. without each perk</li>
+        <li>Your best two-perk combos</li>
+        <li>Win rate by map and by character</li>
+        <li>Rolling trend, weekly activity and streaks</li>
+        <li>Export everything to CSV</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section id="streamers"><div class="wrap split">
+    <div>
+      <div class="eyebrow">Streamer mode</div>
+      <h2>Your roll, live on stream</h2>
+      <ul class="ticks">
+        <li>OBS Browser Source with a transparent background that updates on every spin</li>
+        <li>An always-on-top overlay window for borderless fullscreen</li>
+        <li>Global hotkeys: spin and reveal without alt-tabbing</li>
+        <li>Mystery mode: reveal perks one by one for your chat</li>
+      </ul>
+    </div>
+    <img src="img/overlay.png" alt="Stream overlay showing a killer and perks, two still hidden" loading="lazy">
+  </div></section>
+
+  <section id="faq"><div class="wrap" style="max-width:820px">
+    <div class="eyebrow">FAQ</div>
+    <h2>Questions</h2>
+    <details><summary>Can this get me banned?</summary><p>The tool never reads, injects into or modifies the game. It's a separate app, like a website open on your second monitor. The overlay window is a normal window and the hotkeys are ordinary Windows shortcuts.</p></details>
+    <details><summary>Is it really free?</summary><p>Yes. No ads, no account, no paywall. It's a fan project and will stay free. If you'd like to support it, you can <a href="https://buymeacoffee.com/xurqxy" target="_blank" rel="noopener">buy me a coffee ☕</a>.</p></details>
+    <details><summary>How do I get updates?</summary><p>The app checks for new versions when it starts and shows an update button when one is out. Game data like add-ons and new perks updates automatically every week.</p></details>
+    <details><summary>Where do the perk icons come from?</summary><p>On first launch, the app downloads the official icons from the community DBD Wiki to your PC. They belong to Behaviour Interactive and aren't bundled with the app.</p></details>
+    <details><summary>Windows says "Windows protected your PC".</summary><p>That's SmartScreen, which warns about new apps that aren't code-signed yet. Click <b>More info → Run anyway</b>.</p></details>
+    <details><summary>Is my data uploaded anywhere?</summary><p>No. Your matches, builds and settings stay on your PC. The app only goes online to download icons and game data from the DBD Wiki and to check GitHub for updates.</p></details>
+  </div></section>
+
+  <section id="download"><div class="wrap">
+    <div class="download">
+      <h2>Ready to spin?</h2>
+      <div id="dl-windows">
+        <p class="lead" style="margin:0 auto 28px">Windows 10 and 11, 64-bit. The installer sets itself up in one click and starts instantly every time. The portable version needs no install but unpacks itself on each start, so it opens a few seconds slower. On your phone? <a href="#" id="to-mobile">Get the mobile version</a>.</p>
+        <div class="cta">
+          <a class="btn primary" data-dl href="#">⬇ Download installer</a>
+          <a class="btn" data-dl="portable" href="#">Portable .exe</a>
+        </div>
+        <div class="small" id="dl-note">Both are a single file. No admin rights needed.</div>
+      </div>
+      <div id="dl-android" hidden>
+        <p class="lead" style="margin:0 auto 28px">Android phone or tablet. Download the app, then tap it to install (your browser asks once to allow it). Prefer not to install? <a href="#" data-pwa>Use it in your browser</a> instead.</p>
+        <div class="cta">
+          <a class="btn primary" data-dl="android" href="#">⬇ Download the app (.apk)</a>
+          <a class="btn" href="app/">Open in browser</a>
+        </div>
+        <div class="small">Or on a PC instead? <a href="#" id="to-windows">Download for Windows</a>.</div>
+      </div>
+      <div id="dl-ios" hidden>
+        <p class="lead" style="margin:0 auto 28px">iPhone or iPad. There's no App Store app, but you can add it to your home screen and it works just like one — free, full-screen, offline.</p>
+        <div class="cta"><a class="btn primary" href="app/">Open the app</a></div>
+        <div class="small" style="max-width:420px;margin:16px auto 0">In <b>Safari</b>: tap the <b>Share</b> button, then <b>Add to Home Screen</b>. Open it from your home screen after that. (On a PC instead? <a href="#" id="to-windows2">Download for Windows</a>.)</div>
+      </div>
+    </div>
+  </div></section>
+
+  <footer><div class="wrap">
+    <div class="support" style="margin:0 0 22px">
+      <a class="btn coffee" href="https://buymeacoffee.com/xurqxy" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+      <a class="btn" href="https://github.com/xurqxy" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg> github.com/xurqxy</a>
+    </div>
+    Made by <a href="https://github.com/xurqxy" target="_blank" rel="noopener">Xurqxy</a> ·
+    <a href="https://github.com/xurqxy/xurqxys-dbd-tool/blob/main/LICENSE.txt" target="_blank" rel="noopener">License</a> ·
+    <a href="https://github.com/xurqxy/xurqxys-dbd-tool/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy</a> ·
+    <a href="https://github.com/xurqxy/xurqxys-dbd-tool/blob/main/THIRD-PARTY-NOTICES.txt" target="_blank" rel="noopener">Third-party notices</a><br>
+    Xurqxys DBD Tool is free and fan-made. It is not affiliated with or endorsed by Behaviour Interactive.<br>
+    Dead by Daylight, its logos, icons and character art are trademarks and property of Behaviour Interactive.
+  </div></footer>
+
+  <script>
+    // Set this to "your-github-name/repo-name" once the project is on GitHub.
+    const REPO = 'xurqxy/xurqxys-dbd-tool';
+    const note = document.getElementById('dl-note');
+    const latest = REPO ? `https://github.com/${REPO}/releases/latest` : '';
+    document.querySelectorAll('[data-dl]').forEach((a) => {
+      if (REPO) { a.href = latest; a.target = '_blank'; }
+      else a.addEventListener('click', (e) => { e.preventDefault(); note.textContent = 'Download link coming soon.'; });
+    });
+    document.querySelectorAll('[data-pwa]').forEach((a) => a.href = 'app/');
+    // Show the right section for the device, with links to switch.
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    const isAndroid = /Android/.test(ua);
+    const show = (id) => ['dl-windows', 'dl-android', 'dl-ios'].forEach((x) => document.getElementById(x).hidden = x !== id);
+    if (isIOS) show('dl-ios'); else if (isAndroid) show('dl-android');
+    document.getElementById('to-mobile')?.addEventListener('click', (e) => { e.preventDefault(); show(/Android/.test(ua) ? 'dl-android' : 'dl-ios'); });
+    document.getElementById('to-windows')?.addEventListener('click', (e) => { e.preventDefault(); show('dl-windows'); });
+    document.getElementById('to-windows2')?.addEventListener('click', (e) => { e.preventDefault(); show('dl-windows'); });
+  </script>
+</body>
+</html>

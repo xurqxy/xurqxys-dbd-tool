@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: dbdicon:; font-src 'self'">
+  <title>Xurqxys DBD Tool</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="fog f1"></div><div class="fog f2"></div><div class="fog f3"></div>
+    <canvas id="embers"></canvas>
+    <div class="vignette"></div>
+  </div>
+
+  <header class="titlebar">
+    <div class="tb-brand">
+      <img class="logo" src="logo.svg" alt="" aria-hidden="true">
+      <div class="tb-name">XURQXYS<small>DBD TOOL</small></div>
+    </div>
+    <nav class="tb-nav" id="nav" aria-label="Main">
+      <div class="nav-glider" id="glider"></div>
+      <button data-view="randomizer" data-key="1"></button>
+      <button data-view="database" data-key="2"></button>
+      <button data-view="builds" data-key="3"></button>
+      <button data-view="matches" data-key="4"></button>
+      <button data-view="stats" data-key="5"></button>
+    </nav>
+    <div class="tb-right">
+      <button class="tb-update" id="update-pill" hidden></button>
+      <a class="tb-coffee" id="coffee-link" href="https://buymeacoffee.com/xurqxy" target="_blank" rel="noopener"><span aria-hidden="true">☕</span><span class="tb-coffee-text">Buy me a coffee</span></a>
+      <a class="tb-icon" id="github-link" href="https://github.com/xurqxy" target="_blank" rel="noopener" title="GitHub"></a>
+      <button class="tb-icon" data-view="settings" id="settings-btn" title="Settings & data"></button>
+      <div class="win-controls" id="win-controls">
+        <button id="w-min" title="Minimize"></button>
+        <button id="w-max" title="Maximize"></button>
+        <button id="w-close" class="close" title="Close"></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="view" tabindex="-1"></main>
+  <div class="bg-task" id="bg-task" role="status" hidden></div>
+
+  <aside id="drawer" class="drawer" aria-hidden="true">
+    <div class="drawer-inner" id="drawer-inner"></div>
+  </aside>
+  <div id="scrim" class="scrim"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="tooltip" role="tooltip"></div>
+
+  <script src="i18n.js"></script>
+  <script src="icons.js"></script>
+  <script src="sounds.js"></script>
+  <script src="achievements.js"></script>
+  <script src="share.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

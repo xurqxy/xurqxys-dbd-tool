@@ -1,0 +1,52 @@
+name: Website
+
+# Publishes the website and the mobile web app (website/app/) to GitHub Pages whenever they change on main.
+# Phones open https://<user>.github.io/<repo>/app/ and add it to the home screen (see docs/MOBILE.md).
+# With a private source repo, set RELEASES_REPO + RELEASES_TOKEN and the site is pushed to that public repo's
+# gh-pages branch instead (GitHub Pages from private repos needs a paid plan).
+on:
+  push:
+    branches: [main]
+    paths: ['website/**', 'src/**', 'mobile/**', 'data/**', 'wiki-core.js', 'wiki-sync.js', 'package.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build the mobile web app into website/app
+        run: MOBILE_OUT=website/app node scripts/build-mobile.js
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !vars.RELEASES_REPO }}
+        with:
+          path: website
+      - name: Push to the public releases repo
+        if: ${{ vars.RELEASES_REPO }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.RELEASES_TOKEN }}
+          external_repository: ${{ vars.RELEASES_REPO }}
+          publish_branch: gh-pages
+          publish_dir: website
+
+  deploy:
+    needs: build
+    if: ${{ !vars.RELEASES_REPO }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

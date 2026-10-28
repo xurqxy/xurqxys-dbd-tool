@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0" stop-color="#22101d"/><stop offset="0.55" stop-color="#110a13"/><stop offset="1" stop-color="#07060a"/>
+    </radialGradient>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="48%">
+      <stop offset="0" stop-color="#ff3b5c" stop-opacity="0.28"/><stop offset="1" stop-color="#ff3b5c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="frame" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#ff6b81"/><stop offset="0.45" stop-color="#ff2d55"/><stop offset="1" stop-color="#8b2cf5"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#2a1022"/><stop offset="1" stop-color="#0e0810"/>
+    </linearGradient>
+    <linearGradient id="blade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#ffd1da"/><stop offset="0.7" stop-color="#ff4d6d"/><stop offset="1" stop-color="#c9184a"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+  
+  <g transform="translate(512 512) scale(1.12) translate(-512 -512)">
+    <!-- glow behind the diamond -->
+    
+    <!-- perk diamond -->
+    <polygon points="512,150 874,512 512,874 150,512" fill="url(#inner)" stroke="url(#frame)" stroke-width="66" stroke-linejoin="round"/>
+    
+    <!-- claw slashes forming the X -->
+    
+    <path d="M318 270 Q583.8 454.5 706 754 Q480.8 537.0 318 270Z" fill="url(#blade)"/>
+    <path d="M706 270 Q440.2 454.5 318 754 Q543.2 537.0 706 270Z" fill="url(#blade)"/>
+  </g>
+</svg>

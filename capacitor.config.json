@@ -1,0 +1,13 @@
+{
+  "appId": "com.xurqxy.dbdtool",
+  "appName": "Xurqxys DBD Tool",
+  "webDir": "dist-mobile",
+  "backgroundColor": "#07060a",
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "CapacitorHttp": { "enabled": true }
+  }
+}

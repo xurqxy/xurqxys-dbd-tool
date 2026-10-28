@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-mobile/
+.build/
+*.jks
+*.keystore
+website/app/

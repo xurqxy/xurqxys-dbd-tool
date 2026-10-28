@@ -1,0 +1,47 @@
+@font-face { font-family: Oxanium; font-weight: 700; src: url(/fonts/oxanium-latin-700-normal.woff2) format('woff2'); }
+@font-face { font-family: Oxanium; font-weight: 800; src: url(/fonts/oxanium-latin-800-normal.woff2) format('woff2'); }
+@font-face { font-family: Inter; font-weight: 600; src: url(/fonts/inter-latin-600-normal.woff2) format('woff2'); }
+:root { --red: #ff3b5c; --cyan: #38bdf8; --role: var(--red); }
+html, body { margin: 0; height: 100%; overflow: hidden; background: transparent; color: #fff; font: 600 13px Inter, "Segoe UI", sans-serif; }
+body.bg-green { background: #00ff00; }
+body.bg-dark { background: #0b0910; }
+body.window { -webkit-app-region: drag; }
+body.window:hover #ov { outline: 1px dashed rgba(255, 255, 255, 0.35); outline-offset: -1px; }
+.survivor { --role: var(--cyan); }
+#ov { padding: 10px; }
+.waiting { color: #aaa; font-size: 12px; text-shadow: 0 1px 3px #000; }
+.card { display: flex; align-items: center; gap: 16px; padding: 12px 18px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(20, 14, 28, 0.88), rgba(10, 8, 14, 0.78)); border: 1px solid color-mix(in srgb, var(--role) 45%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--role) 25%, transparent); width: max-content; }
+.ov-v .card { flex-direction: column; align-items: center; }
+.char { display: flex; align-items: center; gap: 12px; }
+.ov-v .char { flex-direction: column; text-align: center; gap: 6px; }
+.cname { font: 800 18px/1.1 Oxanium, sans-serif; text-shadow: 0 0 14px color-mix(in srgb, var(--role) 70%, transparent); }
+.mode { display: block; margin-top: 4px; font: 700 10px Oxanium, sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: var(--role); }
+.perks { display: flex; gap: 10px; }
+.ov-v .perks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px 16px; }
+.perk { display: grid; justify-items: center; gap: 4px; width: 92px; text-align: center; position: relative; }
+.perk span { font-size: 11.5px; line-height: 1.2; text-shadow: 0 1px 3px #000; }
+.no-names .perk span, .no-names .mode { display: none; }
+.no-names .perk { width: auto; }
+.q { position: absolute; top: 0; left: 0; right: 0; height: 70px; display: grid; place-items: center; font: 800 28px Oxanium, sans-serif; color: var(--role); text-shadow: 0 0 12px var(--role); }
+.pop { animation: pop 0.55s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 110ms); }
+@keyframes pop { from { opacity: 0; transform: translateY(10px) scale(0.85) rotateX(60deg); filter: blur(4px); } }
+.squad { display: grid; gap: 6px; }
+.squad .card { padding: 8px 14px; gap: 12px; }
+.squad .perk { width: 74px; }
+.squad .cname { font-size: 14px; width: 130px; }
+/* Perk diamond + emblem styles shared with the app */
+.perk-icon { display: block; color: #fff; filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6)); }
+.perk-icon .pi-outer { fill: rgba(255, 255, 255, 0.12); stroke: rgba(255, 255, 255, 0.35); stroke-width: 1.5; }
+.perk-icon .pi-sheen { fill: rgba(255, 255, 255, 0.07); }
+.perk-icon.killer .pi-outer { fill: #4a0d1b; stroke: #ff5070; } .perk-icon.killer .pi-inner { fill: #2a0610; stroke: rgba(255, 80, 112, 0.5); stroke-width: 1; } .perk-icon.killer { color: #ffb3c1; }
+.perk-icon.survivor .pi-outer { fill: #0c3550; stroke: #4cc6ff; } .perk-icon.survivor .pi-inner { fill: #061c2b; stroke: rgba(76, 198, 255, 0.5); stroke-width: 1; } .perk-icon.survivor { color: #bfe9ff; }
+.perk-icon.none .pi-inner { fill: rgba(0, 0, 0, 0.5); }
+.perk-icon.official .pi-inner { fill: #0d0a12; }
+.emblem .em-hex { stroke: rgba(255, 255, 255, 0.25); stroke-width: 2; }
+.emblem .em-ring { fill: none; stroke: rgba(255, 255, 255, 0.18); stroke-width: 1.5; stroke-dasharray: 4 6; }
+.emblem .em-rune { fill: rgba(255, 255, 255, 0.35); }
+.emblem .em-text { font: 800 54px Oxanium, sans-serif; fill: #fff; }
+.emblem.killer .eg-a { stop-color: #ff3b5c; } .emblem.killer .eg-b { stop-color: #3a0712; }
+.emblem.survivor .eg-a { stop-color: #38bdf8; } .emblem.survivor .eg-b { stop-color: #082a40; }

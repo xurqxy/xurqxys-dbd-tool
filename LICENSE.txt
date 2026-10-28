@@ -1,0 +1,72 @@
+Xurqxys DBD Tool - Freeware License
+Copyright (c) 2026 Xurqxy. All rights reserved.
+
+This license covers the Xurqxys DBD Tool app (Windows, Android
+and web versions), its installers and its source code
+("the Software").
+
+1. FREE TO USE
+   You may download, install and use the Software for free, on as
+   many of your own devices as you like. You may share links to
+   the official download pages and pass on the official,
+   unmodified installers, as long as you don't charge for them.
+
+2. WHAT YOU MAY NOT DO
+   Without written permission from Xurqxy, you may not:
+   a) sell the Software, charge for access to it, or bundle it
+      with something you sell;
+   b) distribute modified versions of the Software, or publish
+      it under another name;
+   c) remove or change the credits, links or this license;
+   d) copy the source code, or substantial parts of it, into
+      other projects;
+   e) reverse engineer, decompile or de-obfuscate the released
+      builds, except where the law explicitly allows it despite
+      this restriction.
+
+3. SOURCE CODE
+   The source code is published so people can see what the
+   Software does and suggest improvements. You may read it, build
+   it for your own personal use and send suggestions or pull
+   requests. By sending a contribution you agree that it may be
+   used in the Software under this license.
+
+4. NO WARRANTY
+   The Software is provided "as is", without warranty of any
+   kind, express or implied, including but not limited to
+   merchantability, fitness for a particular purpose and
+   non-infringement. In no event shall the author be liable for
+   any claim, damages or other liability arising from the use of
+   the Software.
+
+5. DEAD BY DAYLIGHT
+   The Software is a free, unofficial fan project. It is not
+   affiliated with, endorsed, sponsored or approved by Behaviour
+   Interactive Inc. Dead by Daylight, its logos, names, icons and
+   artwork are trademarks and/or copyrighted material of
+   Behaviour Interactive Inc. and its licensors. No game icons or
+   artwork are included in the Software: if the user chooses to,
+   the app downloads them on the user's own device from the
+   community-run Dead by Daylight Wiki for personal use. Perk
+   descriptions included in the Software are short paraphrases
+   written for this project.
+
+6. THIRD-PARTY SOFTWARE
+   The Software includes open-source components (such as
+   Electron, Chromium, Capacitor and the Inter and Oxanium fonts)
+   that remain under their own licenses. See
+   THIRD-PARTY-NOTICES.txt. Nothing in this license restricts
+   your rights under those licenses.
+
+7. PRIVACY
+   The Software does not collect or send personal data. Matches,
+   builds and settings are stored only on your device. The app
+   connects to the internet only to download game data and icons
+   from the Dead by Daylight Wiki and to check GitHub for
+   updates. See PRIVACY.md.
+
+8. TERMINATION
+   If you break these terms, your permission to use the Software
+   ends automatically.
+
+Questions or permission requests: https://github.com/xurqxy

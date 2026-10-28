@@ -1,0 +1,125 @@
+{
+  "name": "xurqxys-dbd-tool",
+  "productName": "Xurqxys DBD Tool",
+  "version": "1.7.0",
+  "description": "Free Dead by Daylight build randomizer, perk database and match tracker.",
+  "main": "main.js",
+  "author": "Xurqxy",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "test": "node test/data.test.js",
+    "dist:win": "node scripts/protect.js && electron-builder --win",
+    "dist:linux": "node scripts/protect.js && electron-builder --linux",
+    "dist:mac": "node scripts/protect.js && electron-builder --mac",
+    "build:mobile": "node scripts/build-mobile.js",
+    "build:android": "node scripts/build-mobile.js && npx cap sync android"
+  },
+  "build": {
+    "appId": "com.xurqxys.dbdtool",
+    "productName": "Xurqxys DBD Tool",
+    "directories": {
+      "app": ".build/app",
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "afterPack": "scripts/after-pack.js",
+    "files": [
+      "main.js",
+      "preload.js",
+      "icon-store.js",
+      "wiki-core.js",
+      "streamer.js",
+      "wiki-sync.js",
+      "updater.js",
+      "data/**",
+      "src/**",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable",
+        "nsis"
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "XurqxysDBDTool-${version}-Setup.${ext}"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "build/icon.png",
+      "category": "Game"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "license": "LICENSE.txt",
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Xurqxys DBD Tool",
+      "uninstallDisplayName": "Xurqxys DBD Tool",
+      "include": "build/installer.nsh",
+      "artifactName": "XurqxysDBDTool-${version}-Setup.${ext}",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/installerSidebar.bmp"
+    },
+    "electronLanguages": [
+      "en-US",
+      "de",
+      "es",
+      "pt-BR",
+      "fr"
+    ],
+    "compression": "maximum",
+    "portable": {
+      "artifactName": "XurqxysDBDTool-${version}.exe"
+    },
+    "extraFiles": [
+      {
+        "from": "LICENSE.txt",
+        "to": "LICENSE.txt"
+      },
+      {
+        "from": "THIRD-PARTY-NOTICES.txt",
+        "to": "THIRD-PARTY-NOTICES.txt"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/cli": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.3",
+    "@capacitor/share": "^6.0.3",
+    "@electron/fuses": "^1.8.0",
+    "acorn": "^8.8.2",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.2",
+    "javascript-obfuscator": "^4.1.1",
+    "resedit": "^1.7.2"
+  },
+  "homepage": "https://github.com/xurqxy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xurqxy/xurqxys-dbd-tool.git"
+  },
+  "releasesRepo": "",
+  "funding": "https://buymeacoffee.com/xurqxy"
+}
