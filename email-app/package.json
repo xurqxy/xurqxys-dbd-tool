@@ -1,0 +1,51 @@
+{
+  "name": "xurqxys-mail",
+  "productName": "Xurqxys Mail",
+  "version": "0.1.0",
+  "description": "A simple desktop email app for your existing email account (IMAP/SMTP).",
+  "main": "main.js",
+  "author": "Xurqxy",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.xurqxys.mail",
+    "productName": "Xurqxys Mail",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "mail.js",
+      "src/**",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
+  },
+  "dependencies": {
+    "imapflow": "^2.12.1",
+    "mailparser": "^3.14.5",
+    "nodemailer": "^10.6.0"
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^26.18.0"
+  }
+}

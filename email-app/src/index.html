@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; font-src 'self' data:; frame-src 'self' about: data:; connect-src 'none'; object-src 'none'">
+  <title>Mail</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sign-in -->
+  <section id="login" class="login hidden">
+    <form id="login-form" class="login-card" autocomplete="off">
+      <div class="brand"><span class="logo">✉</span><h1>Mail</h1></div>
+      <p class="muted">Sign in to the email account you already have.</p>
+
+      <label>Provider
+        <select id="lf-provider"></select>
+      </label>
+      <p id="lf-help" class="help"></p>
+
+      <label>Your name <span class="muted">(shown to people you email)</span>
+        <input id="lf-name" type="text" placeholder="Alex">
+      </label>
+      <label>Email address
+        <input id="lf-email" type="email" placeholder="you@example.com" required>
+      </label>
+      <label>Password / app password
+        <input id="lf-password" type="password" required>
+      </label>
+
+      <fieldset id="lf-custom" class="hidden">
+        <label>Username <span class="muted">(if not your email)</span>
+          <input id="lf-user" type="text">
+        </label>
+        <div class="row">
+          <label class="grow">IMAP server<input id="lf-imap-host" type="text" placeholder="imap.example.com"></label>
+          <label class="port">Port<input id="lf-imap-port" type="number" value="993"></label>
+          <label class="check"><input id="lf-imap-secure" type="checkbox" checked> SSL</label>
+        </div>
+        <div class="row">
+          <label class="grow">SMTP server<input id="lf-smtp-host" type="text" placeholder="smtp.example.com"></label>
+          <label class="port">Port<input id="lf-smtp-port" type="number" value="465"></label>
+          <label class="check"><input id="lf-smtp-secure" type="checkbox" checked> SSL</label>
+        </div>
+        <p class="help">Port 465 = SSL on. Port 587 = SSL off (STARTTLS is used automatically).</p>
+      </fieldset>
+
+      <p id="lf-error" class="error hidden"></p>
+      <button id="lf-submit" class="primary" type="submit">Sign in</button>
+      <p class="muted small">Your password is stored only on this computer, encrypted by the operating system.</p>
+    </form>
+  </section>
+
+  <!-- Main app -->
+  <main id="app" class="app hidden">
+    <aside class="sidebar">
+      <button id="btn-compose" class="primary compose-btn">✎ New email</button>
+      <nav id="folders" class="folders"></nav>
+      <div class="account">
+        <div id="acct-email" class="acct-email"></div>
+        <button id="btn-signout" class="link">Sign out</button>
+      </div>
+    </aside>
+
+    <section class="list-pane">
+      <header class="list-head">
+        <input id="search" type="search" placeholder="Search this folder…">
+        <button id="btn-refresh" class="icon" title="Refresh (F5)">⟳</button>
+      </header>
+      <div id="list-title" class="list-title"></div>
+      <ul id="messages" class="messages"></ul>
+      <button id="btn-more" class="more hidden">Load older messages</button>
+    </section>
+
+    <section id="reader" class="reader">
+      <div id="reader-empty" class="empty">Select a message to read it</div>
+      <article id="reader-msg" class="hidden">
+        <div class="toolbar">
+          <button data-act="reply">↩ Reply</button>
+          <button data-act="replyAll">↩↩ Reply all</button>
+          <button data-act="forward">↪ Forward</button>
+          <span class="sep"></span>
+          <button data-act="archive" title="Archive">Archive</button>
+          <button data-act="flag" id="btn-flag" title="Star">☆</button>
+          <button data-act="unread" title="Mark as unread">Mark unread</button>
+          <button data-act="delete" class="danger" title="Delete (Del)">Delete</button>
+        </div>
+        <h2 id="r-subject"></h2>
+        <div class="meta">
+          <div><b id="r-from"></b> <span id="r-from-addr" class="muted"></span></div>
+          <div class="muted small">To: <span id="r-to"></span><span id="r-cc-wrap" class="hidden"> · Cc: <span id="r-cc"></span></span></div>
+          <div id="r-date" class="muted small"></div>
+        </div>
+        <div id="r-images" class="images-banner hidden">
+          Remote images are blocked to protect your privacy. <button id="btn-images" class="link">Show images</button>
+        </div>
+        <div id="r-attachments" class="attachments"></div>
+        <iframe id="r-body" class="body-frame" sandbox="allow-popups" title="Email content"></iframe>
+      </article>
+    </section>
+  </main>
+
+  <!-- Compose -->
+  <div id="compose" class="compose hidden" role="dialog" aria-label="New email">
+    <div class="compose-card">
+      <header><span id="c-title">New email</span><button id="c-close" class="icon" title="Close">✕</button></header>
+      <div class="c-field"><label for="c-to">To</label><input id="c-to" type="text" placeholder="name@example.com, …"></div>
+      <div class="c-field"><label for="c-cc">Cc</label><input id="c-cc" type="text"></div>
+      <div class="c-field"><label for="c-bcc">Bcc</label><input id="c-bcc" type="text"></div>
+      <div class="c-field"><label for="c-subject">Subject</label><input id="c-subject" type="text"></div>
+      <textarea id="c-body" spellcheck="true"></textarea>
+      <div id="c-files" class="c-files"></div>
+      <p id="c-error" class="error hidden"></p>
+      <footer>
+        <button id="c-send" class="primary">Send</button>
+        <button id="c-attach">📎 Attach files</button>
+        <button id="c-draft">Save draft</button>
+        <span class="muted small">Ctrl+Enter to send</span>
+      </footer>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
